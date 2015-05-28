@@ -1,0 +1,24 @@
+{"question_list":[{
+		"name" : "B1R1",
+		"type" : "text",
+		"label" : "nama"
+	}, {
+		"name" : "B1R2",
+		"type" : "text",
+		"label" : "alamat"
+	}, {
+		"name" : "B1R3",
+		"type" : "select_one",
+		"label" : "jenis kelamin",
+		"option" : {
+			"choice" : "jenis_kelamin"
+		}
+	}, {
+		"name" : "B1R4",
+		"type" : "select_multiple",
+		"label" : "umur",
+		"option" : {
+			"choice" : "jenis_kelamin"
+		}
+	}]
+}
