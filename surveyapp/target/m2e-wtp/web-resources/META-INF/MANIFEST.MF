@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
-Implementation-Title: iss
-Implementation-Version: 0.0.1
+Implementation-Title: SurveyApp
+Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: aan
-Implementation-Vendor-Id: iss
+Implementation-Vendor-Id: SurveyApp
 Build-Jdk: 1.8.0_25
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+<title>index</title>
+<link rel="stylesheet"
+	href="../../res/public/bootstrap/css/bootstrap.min.css" media="screen"
+	th:href="@{/res/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="../../res/public/jquery-ui/jquery-ui.min.css" media="screen"
+	th:href="@{/res/jquery-ui/jquery-ui.min.css}" />
+
+<link rel="stylesheet" href="../../res/public/css/qb.css" media="screen"
+	th:href="@{/res/css/qb.css}" />
+
+<script src="../../res/public/jquery/jquery-2.1.3.min.js"
+	th:src="@{/res/jquery/jquery-2.1.3.min.js}"></script>
+<script src="../../res/public/jquery-ui/jquery-ui.min.js"
+	th:src="@{/res/jquery-ui/jquery-ui.min.js}"></script>
+<script src="../../res/public/bootstrap/js/bootstrap.min.js"
+	th:src="@{/res/bootstrap/js/bootstrap.min.js}"></script>
+
+
+<script src="../../res/public/angular/angular.min.js"
+	th:src="@{/res/angular/angular.min.js}"></script>
+<script src="../../res/public/angular/angular-animate.min.js"
+	th:src="@{/res/angular/angular-animate.min.js}"></script>
+<script src="../../res/public/angular/angular-ui-sortable.js"
+	th:src="@{/res/angular/angular-ui-sortable.js}"></script>
+<script src="../../res/spinner/spin.js"
+	th:src="@{/res/spinner/spin.min.js}"></script>
+<script src="../../res/spinner/spin.js"
+	th:src="@{/res/spinner/angular-spinner.min.js}"></script>
+<script src="../../res/public/js/coba.js" th:src="@{/res/js/qb-app.js}"></script>
+<script src="../../res/public/js/tree.js" th:src="@{/res/js/tree.js}"></script>
+
+<script type="text/javascript">
+	/*<![CDATA[*/
+	$(function() {
+
+		$("#coll").click(function() {
+			$(".collapse").collapse('toggle')
+		});
+
+		hide = true;
+		ne = true;
+		ce = '';
+		href = '';
+
+		$('body').popover({
+			html : true,
+			selector : '[data-toggle="popover"]',
+			content : function() {
+				href = $(this).attr('href');
+				ce = $(href).removeClass('hide');
+				return ce;
+			}
+		}).on("shown.bs.popover", function() {
+			ne = false;
+			$(document).click(function(event) {
+				if (hide && !ne) {
+					$('[data-toggle="popover"]').popover('hide');
+				}
+			});
+			$(".popover").mouseover(function() {
+				hide = false;
+			});
+			$(".popover").mouseleave(function() {
+				hide = true;
+			});
+		}).on("hidden.bs.popover", function() {
+			ne = true;
+			setTimeout(function() {
+				$('[href="' + href + '"]:first').after(ce.addClass('hide'));
+			}, 100);
+		});
+
+	});
+	$(function() {
+		$("#add_new_question_bt").click(function() {
+			$('#myModal').modal({
+				backdrop : 'static'
+			});
+		});
+		$("#tree").treed();
+	});
+
+	$(function() {
+
+		var $sidebar = $("#sidebar"), $window = $(window), offset = $sidebar
+				.offset(), topPadding = 70;
+
+		$window.scroll(function() {
+			if ($window.scrollTop() > offset.top) {
+				$sidebar.stop().animate({
+					marginTop : $window.scrollTop() - offset.top + topPadding
+				});
+			} else {
+				$sidebar.stop().animate({
+					marginTop : 0
+				});
+			}
+		});
+
+	});
+	/*]]>*/
+</script>
+
+
+</head>
+
+<body ng-app="myApp" ng-cloak="">
+	<span us-spinner="{radius:30, width:8, length: 16}"
+		class="parentDisable"></span>
+	<div id="header" class="header-btm navbar navbar-fixed-top">
+		<div class="header-top"></div>
+		<div class="container"></div>
+	</div>
+
+	<div id="body" class="container">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-8" ng-controller="QuestionController as question">
+
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						Questions
+						<button id="coll"></button>
+					</div>
+					<div class="panel-body" style="min-height: 500px">
+						<!--start question-->
+						<div ng-controller="QuestionController as question" class="row">
+							<ul ui-sortable="sortOption" ng-model="question_list"
+								id="question_container" class="list-group" ng-init="no=1">
+								<li question-item="" ng-repeat="question_item in question_list"
+									draggable="true" qidata="question_item" no="$index+1"
+									class="list-group-item no-padding"></li>
+
+							</ul>
+						</div>
+						<!--end question-->
+						<div class=" row container-fluid" style="margin-top: -15px">
+							<div class=" border-dotted">
+								<div class="centered" style="width: 25px; padding: 0px;">
+									<a href="#" role="button" id="" ng-click="showQuestionPanel()"><span
+										style="font-size: 24px;" class=" glyphicon-plus"
+										aria-hidden="true"></span></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-3 ">
+				<div id="sidebar">
+					<div class="container-fluid animate-show"
+						ng-show="addQuestionPanel">
+						<div class="panel panel-success"
+							ng-controller="AddQuestionController">
+							<div class="panel-heading">Add question</div>
+							<div class="panel-body">
+								<button class="btn btn-primary btn-sm btn-block"
+									ng-click="addQuestion(0)">Text</button>
+								<button class="btn btn-primary btn-sm btn-block"
+									ng-click="addQuestion(1)">Number</button>
+								<button class="btn btn-primary btn-sm btn-block"
+									ng-click="addQuestion(2)">Select (One)</button>
+								<button class="btn btn-primary btn-sm btn-block"
+									ng-click="addQuestion(3)">Select (Multiple)</button>
+								<button class="btn btn-primary btn-sm btn-block"
+									ng-click="addQuestion(4)">Group</button>
+
+								<!-- /input-group -->
+							</div>
+						</div>
+					</div>
+
+					<div class="container-fluid animate-show"
+						ng-hide="addQuestionPanel">
+						<div class="panel panel-success"
+							ng-controller="QuestionPropertiesController">
+							<div class="panel-heading">Question Properties</div>
+							<div class="panel-body" style="height: 500px; overflow: auto;">
+								<div class="form-group">
+									<label  class=" control-label">Data
+										name</label><input type="text" class="form-control" placeholder="Name"
+										ng-model="data.name" />
+								</div>
+								<div class="form-group">
+									<label class=" control-label"> Question text/label</label>
+									<textarea class="form-control" placeholder="Text/Label"
+										ng-model="data.label"></textarea>
+								</div>
+								<div class="form-group"
+									ng-show="data.type=='select_one'|| data.type=='select_multiple'">
+									<label class=" control-label"> Selection choice</label>
+									
+									<div class="container-fluid">
+										<table class="table  table-striped">
+											<tr ng-repeat="item in choice_list[data.choice]">
+												<td>{{item.name}}</td>
+												<td>{{item.label}}</td>
+											</tr>
+										</table>
+									</div>
+									<button type="button" class="btn btn-xs btn-info"
+										data-toggle="modal" data-target="#modalAddOptions">Create
+										choice</button>
+									<combo-autocomplete cadata="data"></combo-autocomplete>
+								</div>
+								<a data-toggle="collapse" data-parent="#accordion"
+									href="#propertiesAdvanced" aria-expanded="true"
+									aria-controls="collapseOne"> Advanced </a>
+
+								<div id="propertiesAdvanced" class="panel-collapse collapse"
+									aria-labelledby="headingOne">
+									<div class="">
+										<div class="form-group">
+											<label for="" class=" control-label"> Required </label> <input
+												type="checkbox" ng-model="data.required" />
+										</div>
+										<div class="form-group"
+											ng-show="data.type=='text'||data.type=='number'">
+											<label for="" class=" control-label">Length</label>
+											<div class="row">
+												<div class="col-md-6">
+													Min <input type="text" class="form-control" ng-model="data.min"
+														placeholder="min" />
+												</div>
+												<div class="col-md-6">
+													Max <input type="text" class="form-control" ng-model="data.max"
+														placeholder="max" />
+												</div>
+											</div>
+										</div>
+										<div class="form-group" ng-show="data.type=='number'">
+											<label class=" control-label">Type</label> <select
+												class="form-control" ng-model="data.number_type">
+												<option value="integer">Integer</option>
+												<option value="decimal">Decimal</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="inputEmail3" class=" control-label">Constraint
+												message </label><input type="text" class="form-control"
+												placeholder="Name" />
+										</div>
+										<div class="form-group">
+											<label class=" control-label"> Hint</label>
+											<textarea class="form-control" placeholder="Text/Label"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div style="position: fixed; left: 1px; top: 100px"
+		ng-controller="QuestionnaireBuilderActionMenu">
+		<div class="list-group " style="float: left;">
+			<button  class="list-group-item" ng-click="save()">save</button> <a href="#"
+				class="list-group-item">open</a> <a href="#" class="list-group-item">clear</a>
+			<a href="#" class="list-group-item">next</a>
+		</div>
+		<div class="" style="float: left;"></div>
+		<div style="clear: both;"></div>
+	</div>
+
+	<div class="modal fade" id="modalAddOptions" aria-hidden="true"
+		role="dialog" data-backdrop="static">
+		<div class="modal-dialog modal-sm"
+			ng-controller="AddNewOptionsController">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Add new options</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="inputEmail3" class=" control-label">Option
+							name</label><input type="text" class="form-control" id="inputEmail3"
+							placeholder="Name" ng-model="optionName" />
+					</div>
+					<table>
+						<tr>
+							<th>name/value</th>
+							<th>text/label</th>
+						</tr>
+						<tr>
+							<td><textarea class="form-control" rows="4" cols=""
+									ng-model="optionValue"></textarea></td>
+							<td><textarea class="form-control" rows="4" cols=""
+									ng-model="optionLabel"></textarea></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						ng-click="cancel()">Close</button>
+					<button type="button" class="btn btn-primary" ng-click="save()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- modal new question -->
+	<!-- <div ng-controller="NewQuestionController as addNewQ"
+		class="modal fade " id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog ">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Add Question</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2">Name</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control "
+									placeholder="question name" ng-model="qName" />
+							</div>
+
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2">Label</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" placeholder="question label"
+									ng-model="qLabel"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2">Accept Null</label>
+							<div class="col-sm-10">
+								<div class="radio">
+									<label> <input type="radio" name="optionsRadios"
+										id="optionsRadios1" value="option1" checked="" /> Yes
+									</label>
+								</div>
+								<div class="radio">
+									<label> <input type="radio" name="optionsRadios"
+										id="optionsRadios2" value="option2" /> No
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2">Type</label>
+							<div class="col-sm-10">
+								<select ng-change="addQuestionOption()" name="question_type"
+									ng-model="qType"
+									ng-options="type.label for type in question_types"></select>
+							</div>
+						</div>
+						<div id="question_option"></div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary"
+						ng-click="addQuestion(qName,qLabel,qType)">Add</button>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+
+
+
+	<div ng-include="" src="'templates/qb_question_options'"></div>
+
+	<script type="text/ng-template" id="/comboAutocomplete.html">
+
+<div class="">
+								<div class="input-group combo-autocomplete">
+
+									<input type="text" class="form-control "
+										placeholder="" ng-model="cadata.choice" ng-blur="onBlur()"  /> <span class="input-group-btn">
+										<button
+											class="btn btn-default btn-sm glyphicon glyphicon-triangle-bottom"
+											type="button" ng-click="toggleList()" ng-blur="onBlur()"></button>
+									</span>
+								</div>
+								<div ng-show="showList" style="position:absolute; z-index:1000;" class="ac-list">
+									<div class="list-group">
+										<a href="#" class="list-group-item" style="padding: 2px;" ng-repeat="item in dataShow" ng-click="select(item)">{{item}}</a>
+									</div>
+									
+								</div>
+							</div>
+</script>
+
+
+	<!-- <div class="col-md-3" ng-controller="QuestionListController as qs">
+				<div class="container-fluid">
+					<div class="well well-sm">
+						<ul id="tree">
+							<li ng-repeat="question in question_list">{{question.name}}
+								({{question.type}})</li>
+						</ul>
+
+					</div>
+
+				</div>
+				<button ng-click="save()">save</button>
+			</div> -->
+</body>
+</html>

@@ -4,12 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 @Configuration
 public class CobaConfiguration {
@@ -17,15 +11,15 @@ public class CobaConfiguration {
 //	public ViewResolver viewResolver() {
 //		
 //		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
-//		templateResolver.setTemplateMode("HTML5");
+//		templateResolver.setTemplateMode("LEGACYHTML5");
 //		templateResolver.setPrefix("view/");
 //		templateResolver.setSuffix("html");
 //		SpringTemplateEngine engine = new SpringTemplateEngine();
 //		engine.setTemplateResolver(templateResolver);
 //		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 //		viewResolver.setTemplateEngine(engine);
+//		viewResolver.setOrder(0);
 //		return viewResolver;
-//
 //	}
 //
 //	@Bean
@@ -41,14 +35,15 @@ public class CobaConfiguration {
 	public DriverManagerDataSource getDataSource(){
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/coba");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/iss");
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("postgres");
 		return dataSource;
 	}
 	
 	
-	@Bean JdbcTemplate getJdbcTemplate(){
+	@Bean 
+	public JdbcTemplate getJdbcTemplate(){
 		return new JdbcTemplate(getDataSource());
 	}
 }
