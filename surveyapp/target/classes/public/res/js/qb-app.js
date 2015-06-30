@@ -2,7 +2,7 @@
  * 
  */
 (function() {
-	var app = angular.module('myApp', [ 'angularSpinner', 'ngAnimate',
+	var app = angular.module('QuestionnaireBuilderApp', [ 'angularSpinner', 'ngAnimate',
 			'ui.sortable' ])
 	app.directive("comboAutocomplete", function($http, $filter, $timeout) {
 		return {
@@ -75,7 +75,7 @@
 				no : "="
 
 			},
-			templateUrl : 'templates/qb_question_item',
+			templateUrl : 'questionnairebuilder/templates/qb_question_item',
 			link : function(scope, e, attrs) {
 				a = "";
 				qae = e.find(".question-answer");
@@ -229,10 +229,19 @@
 	var min_temp = "";
 	var max_temp = "";
 
-	app.run(function($rootScope, $filter) {
+	app.run(function($rootScope, $filter,$http) {
 		$rootScope.selectedQuestion = '';
 		$rootScope.question_list = [];
 		$rootScope.choice_list = choice_list;
+		//$rootScope.getQuestion = function() {
+			$http.get("/get").success(
+					function(data, status, header, config) {
+						$rootScope.question_list = data.questionList;
+						//return data.question_list;
+					}).error(function(data, status) {
+				alert(status);
+			});
+		//};
 		$rootScope.deleteQuestion = function(qName) {
 			$rootScope.question_list = $filter('filter')(
 					$rootScope.question_list, {
@@ -313,22 +322,14 @@
 
 	app.factory("questionService", function($http, $rootScope) {
 		question = {};
-		question.getQuestion = function() {
-			$http.get("/get").success(
-					function(data, status, header, config) {
-						$rootScope.question_list = data.questionList;
-						return data.question_list;
-					}).error(function(data, status) {
-				alert(status);
-			});
-		};
+		
 
 		return question;
 	});
 
 	app.controller("QuestionController", function($scope, $filter, $rootScope,
 			questionService) {
-		questionService.getQuestion();
+		$rootScope.getQuestion();
 		$scope.sortOption = {
 			update : function(e, ui) {
 			},

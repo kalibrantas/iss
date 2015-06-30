@@ -1,0 +1,55 @@
+<div class="panel panel-default">
+	<div class="panel-heading">User</div>
+	<div class="panel-body">
+		<form class="form-horizontal" ng-submit="save()">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">First name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="name"
+						ng-model="user.first_name" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Last name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="name"
+						ng-model="user.last_name" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Email</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="name"
+						ng-model="user.email" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Password</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="name"
+						ng-model="user.password" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Role</label>
+				<div class="col-sm-10">
+					<div class="radio">
+						<label> <input type="radio" name="optionsRadios"
+							id="optionsRadios1" value="admin" ng-model="user.role" />Admin
+						</label>
+					</div>
+					<div class="radio">
+						<label> <input type="radio" name="optionsRadios"
+							id="optionsRadios2" value="user" ng-model="user.role" />User
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-default">Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

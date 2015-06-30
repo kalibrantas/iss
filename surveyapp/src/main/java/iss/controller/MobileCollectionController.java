@@ -19,5 +19,4 @@ public class MobileCollectionController extends AbstractISSController{
 		rd.saveRespondent(r);
 		return "save";
 	}
-
 }

@@ -3,8 +3,8 @@
 <head>
 <meta charset="ISO-8859-1" />
 
-<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
-		Remove this if you use the .htaccess -->
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome
+Frame Remove this if you use the .htaccess -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 <title>index</title>
@@ -114,7 +114,7 @@
 
 </head>
 
-<body ng-app="myApp" ng-cloak="">
+<body ng-app="QuestionnaireBuilderApp" ng-cloak="">
 	<span us-spinner="{radius:30, width:8, length: 16}"
 		class="parentDisable"></span>
 	<div id="header" class="header-btm navbar navbar-fixed-top">
@@ -188,8 +188,8 @@
 							<div class="panel-heading">Question Properties</div>
 							<div class="panel-body" style="height: 500px; overflow: auto;">
 								<div class="form-group">
-									<label  class=" control-label">Data
-										name</label><input type="text" class="form-control" placeholder="Name"
+									<label class=" control-label">Data name</label><input
+										type="text" class="form-control" placeholder="Name"
 										ng-model="data.name" />
 								</div>
 								<div class="form-group">
@@ -200,7 +200,7 @@
 								<div class="form-group"
 									ng-show="data.type=='select_one'|| data.type=='select_multiple'">
 									<label class=" control-label"> Selection choice</label>
-									
+
 									<div class="container-fluid">
 										<table class="table  table-striped">
 											<tr ng-repeat="item in choice_list[data.choice]">
@@ -230,12 +230,12 @@
 											<label for="" class=" control-label">Length</label>
 											<div class="row">
 												<div class="col-md-6">
-													Min <input type="text" class="form-control" ng-model="data.min"
-														placeholder="min" />
+													Min <input type="text" class="form-control"
+														ng-model="data.min" placeholder="min" />
 												</div>
 												<div class="col-md-6">
-													Max <input type="text" class="form-control" ng-model="data.max"
-														placeholder="max" />
+													Max <input type="text" class="form-control"
+														ng-model="data.max" placeholder="max" />
 												</div>
 											</div>
 										</div>
@@ -268,9 +268,10 @@
 	<div style="position: fixed; left: 1px; top: 100px"
 		ng-controller="QuestionnaireBuilderActionMenu">
 		<div class="list-group " style="float: left;">
-			<button  class="list-group-item" ng-click="save()">save</button> <a href="#"
-				class="list-group-item">open</a> <a href="#" class="list-group-item">clear</a>
-			<a href="#" class="list-group-item">next</a>
+			<button class="list-group-item" ng-click="save()">save</button>
+			<a href="#" class="list-group-item">open</a> <a href="#"
+				class="list-group-item">clear</a> <a href="#"
+				class="list-group-item">next</a>
 		</div>
 		<div class="" style="float: left;"></div>
 		<div style="clear: both;"></div>

@@ -1,0 +1,29 @@
+<div class="container-fluid" style="margin-top: 50px">
+
+	<div class="col-sm-9 col-md-10 main">
+
+
+		<div class="">
+			<table class="table">
+				<tr>
+					<th>No</th>
+					<th>User</th>
+					<th>Respondent</th>
+					<th>Location</th>
+					<th>Input time</th>
+					<th>Sync time</th>
+				</tr>
+				<tr ng-repeat="r in respondents">
+					<td>{{$index+1}}</td>
+					<td>{{r.id_respondent}}</td>
+					<td>{{r.id_user}}</td>
+					<td>{{r.id_survey}}</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+
+</div>

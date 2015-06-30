@@ -51,6 +51,7 @@ public class MultipleSecurityConfiguration {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			// TODO Auto-generated method stub
+						
 
 			http.antMatcher("/user").authorizeRequests().anyRequest()
 					.authenticated().and()
@@ -65,6 +66,8 @@ public class MultipleSecurityConfiguration {
 			repository.setHeaderName("X-XSRF-TOKEN");
 			return repository;
 		}
+		
+		
 
 		class CsrfHeaderFilter extends OncePerRequestFilter {
 			@Override
@@ -96,7 +99,7 @@ public class MultipleSecurityConfiguration {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			// TODO Auto-generated method stub
-			http.authorizeRequests().antMatchers("/", "/login", "/res/**", "/saveanswer","/get")
+			http.authorizeRequests().antMatchers("/login", "/res/**", "/saveanswer","/get")
 					.permitAll().anyRequest().authenticated().and().formLogin()
 					.loginPage("/login").and().logout().and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
 					.csrf().csrfTokenRepository(csrfTokenRepository());

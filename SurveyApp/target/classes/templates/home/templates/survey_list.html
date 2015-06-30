@@ -1,0 +1,21 @@
+<div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Your survey</div>
+		<div class="panel-body">
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="item in survey_list">
+					<div class="row">
+						<div class="col-md-6"><a href="/survey/{{item.id_survey}}">{{item.name}}</a></div>
+						<div class="col-md-6">
+							<div class="pull-right">
+								<button>edit</button>
+							</div>
+							<div class="pull-right">OPtion2</div>
+						</div>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+</div>
